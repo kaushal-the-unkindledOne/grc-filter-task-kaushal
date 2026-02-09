@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchRisks } from "../services/api";
-import Heatmap from "./heatMap"; 
+import Heatmap from "./heatMap";
 
 function RiskTable() {
   const [risks, setRisks] = useState([]);
@@ -28,6 +28,66 @@ function RiskTable() {
     setSortAsc(!sortAsc);
   };
 
+  const exportCSV = () => {
+    if (risks.length === 0) {
+      alert("No risks to export");
+      return;
+    }
+
+    const headers = [
+      "ID",
+      "Asset",
+      "Threat",
+      "Likelihood",
+      "Impact",
+      "Score",
+      "Level",
+      "Mitigation Hint",
+    ];
+
+    const rows = risks.map((risk) => [
+      risk.id,
+      risk.asset,
+      risk.threat,
+      risk.likelihood,
+      risk.impact,
+      risk.score,
+      risk.level,
+      getMitigationHint(risk.level),
+    ]);
+
+    const csvContent = [headers, ...rows]
+      .map((row) => row.join(","))
+      .join("\n");
+
+    const blob = new Blob([csvContent], {
+      type: "text/csv;charset=utf-8;",
+    });
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "risk-report.csv";
+    link.click();
+
+    URL.revokeObjectURL(url);
+  };
+
+  const getMitigationHint = (level) => {
+    switch (level) {
+      case "Low":
+        return "Accept / monitor";
+      case "Medium":
+        return "Plan mitigation within 6 months";
+      case "High":
+        return "Prioritize action per NIST";
+      case "Critical":
+        return "Immediate mitigation required";
+      default:
+        return "-";
+    }
+  };
+
   const totalRisks = risks.length;
   const highCriticalCount = risks.filter(
     (r) => r.level === "High" || r.level === "Critical"
@@ -48,7 +108,7 @@ function RiskTable() {
     <div className="card">
       <h3>Risk Overview</h3>
 
-      {}
+      {/* Stats */}
       <div className="stats">
         <div className="stat-card">
           <h4>Total Risks</h4>
@@ -66,26 +126,30 @@ function RiskTable() {
         </div>
       </div>
 
-      {}
-      <div className="filter">
-        <label>
-          Filter by Level:&nbsp;
-          <select
-            value={levelFilter}
-            onChange={(e) => setLevelFilter(e.target.value)}
-          >
-            <option>All</option>
-            <option>Low</option>
-            <option>Medium</option>
-            <option>High</option>
-            <option>Critical</option>
-          </select>
-        </label>
+      {/* Filter + Export */}
+      <div className="controls">
+        <div className="filter">
+          <label>
+            Filter by Level:&nbsp;
+            <select
+              value={levelFilter}
+              onChange={(e) => setLevelFilter(e.target.value)}
+            >
+              <option>All</option>
+              <option>Low</option>
+              <option>Medium</option>
+              <option>High</option>
+              <option>Critical</option>
+            </select>
+          </label>
+        </div>
+
+        <button className="export-btn" onClick={exportCSV}>
+          Export CSV
+        </button>
       </div>
 
-      <br />
-
-      {}
+      {/* Table */}
       <table>
         <thead>
           <tr>
@@ -98,6 +162,7 @@ function RiskTable() {
               Score {sortAsc ? "↑" : "↓"}
             </th>
             <th>Level</th>
+            <th>Mitigation Hint</th>
           </tr>
         </thead>
 
@@ -115,14 +180,13 @@ function RiskTable() {
                   {risk.level}
                 </span>
               </td>
+              <td>{getMitigationHint(risk.level)}</td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      <br />
-
-      {}
+      {/* Heatmap */}
       <Heatmap risks={risks} />
     </div>
   );
