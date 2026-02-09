@@ -28,7 +28,6 @@ function RiskTable() {
     setSortAsc(!sortAsc);
   };
 
-  // 📊 Stats
   const totalRisks = risks.length;
   const highCriticalCount = risks.filter(
     (r) => r.level === "High" || r.level === "Critical"
@@ -49,7 +48,7 @@ function RiskTable() {
     <div className="card">
       <h3>Risk Overview</h3>
 
-      {/* 📊 Summary Cards */}
+      {}
       <div className="stats">
         <div className="stat-card">
           <h4>Total Risks</h4>
@@ -67,7 +66,7 @@ function RiskTable() {
         </div>
       </div>
 
-      {/* 🔍 Filter */}
+      {}
       <div className="filter">
         <label>
           Filter by Level:&nbsp;
@@ -86,7 +85,7 @@ function RiskTable() {
 
       <br />
 
-      {/* 📋 Table */}
+      {}
       <table>
         <thead>
           <tr>
@@ -123,7 +122,7 @@ function RiskTable() {
 
       <br />
 
-      {/* 🔥 Heatmap */}
+      {}
       <Heatmap risks={risks} />
     </div>
   );

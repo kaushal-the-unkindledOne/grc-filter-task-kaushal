@@ -1,19 +1,17 @@
 import React from "react";
 
 function getColor(score) {
-  if (score >= 1 && score <= 5) return "#38a169";     // Low
-  if (score >= 6 && score <= 12) return "#d69e2e";   // Medium
-  if (score >= 13 && score <= 18) return "#dd6b20";  // High
-  return "#e53e3e";                                  // Critical
+  if (score >= 1 && score <= 5) return "#38a169";     
+  if (score >= 6 && score <= 12) return "#d69e2e";   
+  if (score >= 13 && score <= 18) return "#dd6b20";  
+  return "#e53e3e";                                  
 }
 
 function Heatmap({ risks }) {
-  // Create empty 5x5 grid
   const grid = Array.from({ length: 5 }, () =>
     Array.from({ length: 5 }, () => [])
   );
 
-  // Fill grid
   risks.forEach((risk) => {
     const l = risk.likelihood - 1;
     const i = risk.impact - 1;
@@ -24,7 +22,7 @@ function Heatmap({ risks }) {
     <div className="card">
       <h3>Risk Heatmap</h3>
 
-      {/* Legend */}
+      {}
       <div style={{ marginBottom: "12px", fontSize: "14px" }}>
         <b>Legend:</b>{" "}
         <span style={{ background: "#38a169", color: "#fff", padding: "4px 8px", borderRadius: "4px" }}>

@@ -39,7 +39,7 @@ function RiskForm({ onRiskAdded }) {
       <h3>Add Risk</h3>
 
       <form onSubmit={handleSubmit}>
-        {/* Asset */}
+        {}
         <div style={{ marginBottom: "10px" }}>
           <input
             placeholder="Asset (e.g. Database Server)"
@@ -49,7 +49,7 @@ function RiskForm({ onRiskAdded }) {
           />
         </div>
 
-        {/* Threat */}
+        {}
         <div style={{ marginBottom: "10px" }}>
           <input
             placeholder="Threat (e.g. Data Breach)"
@@ -59,7 +59,7 @@ function RiskForm({ onRiskAdded }) {
           />
         </div>
 
-        {/* Likelihood */}
+        {}
         <div style={{ marginBottom: "12px" }}>
           <label>
             Likelihood: <b>{likelihood}</b>
@@ -74,7 +74,7 @@ function RiskForm({ onRiskAdded }) {
           />
         </div>
 
-        {/* Impact */}
+        {}
         <div style={{ marginBottom: "12px" }}>
           <label>
             Impact: <b>{impact}</b>
@@ -89,7 +89,7 @@ function RiskForm({ onRiskAdded }) {
           />
         </div>
 
-        {/* Preview */}
+        {}
         <p style={{ marginBottom: "12px" }}>
           Preview:&nbsp;
           <b>Score = {score}</b> |{" "}
