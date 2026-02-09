@@ -3,7 +3,6 @@ const router = express.Router();
 const db = require("../db");
 const { calculateRisk } = require("../utils/riskLogic");
 
-// POST /assess-risk
 router.post("/assess-risk", (req, res) => {
   const { asset, threat, likelihood, impact } = req.body;
 
@@ -54,7 +53,6 @@ router.post("/assess-risk", (req, res) => {
   );
 });
 
-// GET /risks
 router.get("/risks", (req, res) => {
   const { level } = req.query;
 
